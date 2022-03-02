@@ -1,11 +1,11 @@
 <template>
- <nav class="navbar navbar-expand-lg navbar-bytebank">
+  <nav class="navbar navbar-expand-lg navbar-bytebank">
     <a class="navbar-brand" href="#">ByteBank</a>
     <button class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon">s</span>
     </button>
     <div class="collapse navbar-collapse">
-      <BarraNavegacaoLogado v-if="usuarioestaLogado" />
+      <BarraNavegacaoLogado v-if="usuarioEstaLogado" />
       <BarraNavegacaoDeslogado v-else />
     </div>
   </nav>
@@ -14,6 +14,7 @@
 <script>
 import BarraNavegacaoLogado from "@/components/BarraNavegacaoLogado";
 import BarraNavegacaoDeslogado from "@/components/BarraNavegacaoDeslogado";
+import { mapGetters } from "vuex"
 
 export default {
   components: {
@@ -22,9 +23,7 @@ export default {
   },
 
   computed: {
-    usuarioestaLogado() {
-      return Boolean(this.$store.state.token);
-    },
+    ...mapGetters(['usuarioEstaLogado'])
   },
 };
 </script>
