@@ -29,12 +29,6 @@ export default {
       .then((response) => (this.gerentes = response.data))
       .catch((erro) => console.log(erro));
   },
-  befereRouteEnter(to, from, next) {
-    if (!this.$store.this.state.token) {
-      this.$router.push({ name: "login" });
-    }
-    next();
-  },
 };
 </script>
 
