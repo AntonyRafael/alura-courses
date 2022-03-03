@@ -1,5 +1,6 @@
 import Lance from '@/components/Lance'
 import { mount } from '@vue/test-utils'
+
 describe('Um Lance sem valor mínimo', () => {
   test('Nãa aceita lance com valor menor do que zero', () => {
     const wrapper = mount(Lance)
