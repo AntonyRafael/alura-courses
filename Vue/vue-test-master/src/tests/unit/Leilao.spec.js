@@ -21,6 +21,5 @@ describe('um leilão exibe os dados do produto', () => {
     expect(header.textContent).toContain(`Estamos leiloando um(a): ${leilao.produto}`)
     expect(title.textContent).toContain(`Lance inicial: R$ ${leilao.lanceInicial}`)
     expect(text.textContent).toContain(leilao.descricao)
-
   })
 })
