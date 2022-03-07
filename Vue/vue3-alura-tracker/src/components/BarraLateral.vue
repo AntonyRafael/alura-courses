@@ -1,19 +1,38 @@
 <template>
   <header>
     <h1>
-      <img src="../assets/logo.png" alt="logo alura tracker">
+      <img src="../assets/logo.png" alt="logo alura tracker" />
     </h1>
+    <button class="button" @click="alterarTema">
+      {{ textoDoBotao }}
+    </button>
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'BarraLateral'
-})
+  name: "BarraLateral",
+  emits: ["aoTemaAlterado"],
+  data() {
+    return {
+      modoEscuro: false,
+    };
+  },
+  computed: {
+    textoDoBotao() {
+      return this.modoEscuro ? "Desativar modo escuro" : "Ativar modo escuro";
+    },
+  },
+  methods: {
+    alterarTema() {
+      this.modoEscuro = !this.modoEscuro;
+      this.$emit("aoTemaAlterado", this.modoEscuro);
+    },
+  },
+});
 </script>
-
 
 <style scoped>
 header {
@@ -21,6 +40,7 @@ header {
   background: #0d3b66;
   width: 100%;
   height: 100vh;
+  text-align: center;
 }
 @media only screen and (max-width: 768px) {
   header {
