@@ -1,5 +1,6 @@
 import IProjeto from "@/interfaces/IProjeto";
 import ITarefa from "@/interfaces/ITarefa";
+import { INotificacao, TipoNotificacao } from "@/interfaces/INotificacao";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
 import {
@@ -14,6 +15,7 @@ import {
 interface Estado {
   projetos: IProjeto[];
   tarefas: ITarefa[];
+  notificacoes: INotificacao[];
 }
 
 export const key: InjectionKey<Store<Estado>> = Symbol();
@@ -22,6 +24,32 @@ export const store = createStore<Estado>({
   state: {
     projetos: [],
     tarefas: [],
+    notificacoes: [
+      {
+        id: 1,
+        texto: "Notificação de sucesso",
+        titulo: "sucesso",
+        tipo: TipoNotificacao.SUCESSO,
+      },
+      {
+        id: 2,
+        texto: "Notificação de atenção",
+        titulo: "atenção",
+        tipo: TipoNotificacao.ATENCAO,
+      },
+      {
+        id: 3,
+        texto: "Notificação de falha",
+        titulo: "erro",
+        tipo: TipoNotificacao.FALHA,
+      },
+      {
+        id: 4,
+        texto: "Notificação de sucee",
+        titulo: "sucee",
+        tipo: TipoNotificacao.SUCESSO,
+      },
+    ],
   },
   mutations: {
     [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
@@ -40,8 +68,8 @@ export const store = createStore<Estado>({
       state.projetos = state.projetos.filter((proj) => proj.id != idDoProjeto);
     },
     [ADICIONA_TAREFA](state, tarefa: ITarefa) {
-      tarefa.id = new Date().toISOString()
-      state.tarefas.push(tarefa)
+      tarefa.id = new Date().toISOString();
+      state.tarefas.push(tarefa);
     },
     [ALTERA_TAREFA](state, tarefa: ITarefa) {
       const indice = state.tarefas.findIndex(
