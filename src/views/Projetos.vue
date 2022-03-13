@@ -26,8 +26,8 @@
       </thead>
       <tbody>
         <tr v-for="projeto in projetos" :key="projeto.id">
-          <td>{{ projeto.id}}</td>
-          <td>{{ projeto.nome}}</td>
+          <td>{{ projeto.id }}</td>
+          <td>{{ projeto.nome }}</td>
         </tr>
       </tbody>
     </table>
