@@ -68,7 +68,8 @@ export const store = createStore<Estado>({
     },
   },
 });
-
+// TODO verificar e lançar notificacao de erro caso a tarefa não possua um projeto vinculado
+// TODO transformar tarefa para utilizar store
 export function useStore(): Store<Estado> {
   return vuexUseStore(key);
 }
