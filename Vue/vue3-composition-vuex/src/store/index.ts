@@ -5,6 +5,7 @@ import {
   ADICIONA_PROJETO,
   ALTERA_PROJETO,
   DEFINIR_PROJETO,
+  DEFINIR_TAREFAS,
   EXCLUIR_PROJETO,
   NOTIFICAR,
 } from "./tipo-mutacoes";
@@ -13,12 +14,15 @@ import {
   ALTERAR_PROJETOS,
   CADASTRAR_PROJETOS,
   OBTER_PROJETOS,
+  OBTER_TAREFAS,
   REMOVER_PROJETOS,
 } from "./tipo-acoes";
 import http from "@/http";
+import ITarefa from "@/interfaces/ITarefa";
 
 interface Estado {
   projetos: IProjeto[];
+  tarefas: ITarefa[];
   notificacoes: INotificacao[];
 }
 
@@ -27,6 +31,7 @@ export const key: InjectionKey<Store<Estado>> = Symbol();
 export const store = createStore<Estado>({
   state: {
     projetos: [],
+    tarefas: [],
     notificacoes: [],
   },
   mutations: {
@@ -46,6 +51,9 @@ export const store = createStore<Estado>({
     },
     [DEFINIR_PROJETO](state, projetos: IProjeto[]) {
       state.projetos = projetos;
+    },
+    [DEFINIR_TAREFAS](state, tarefa: ITarefa[]) {
+      state.tarefas = tarefa;
     },
     [NOTIFICAR](state, novaNotificacao: INotificacao) {
       novaNotificacao.id = new Date().getTime();
@@ -76,6 +84,11 @@ export const store = createStore<Estado>({
       return http.delete(`/projetos/${id}`).then(() => {
         commit(EXCLUIR_PROJETO, id);
       });
+    },
+    [OBTER_TAREFAS]({ commit }) {
+      http
+        .get("tarefas")
+        .then((resposta) => commit(DEFINIR_TAREFAS, resposta.data));
     },
   },
 });

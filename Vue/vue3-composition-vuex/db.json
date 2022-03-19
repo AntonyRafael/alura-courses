@@ -9,5 +9,15 @@
       "id": 2
     }
   ],
-  "tarefas": []
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 180,
+      "descricao": "Configuração do ambiente",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 3.0"
+      }
+    }
+  ]
 }
