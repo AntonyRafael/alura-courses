@@ -18,6 +18,15 @@
         "id": 1,
         "nome": "Alura Tracker 3.0"
       }
+    },
+    {
+      "duracaoEmSegundos": 5,
+      "descricao": "Refatorando Vuex",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 3.0"
+      },
+      "id": 2
     }
   ]
 }
