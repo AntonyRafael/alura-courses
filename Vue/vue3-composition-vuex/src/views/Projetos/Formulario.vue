@@ -21,52 +21,81 @@
 import { useStore } from "@/store";
 import { defineComponent } from "vue";
 
-import { ALTERA_PROJETO, ADICIONA_PROJETO } from '@/store/tipo-mutacoes'
 import { TipoNotificacao } from "@/interfaces/INotificacao";
 
-import useNotificador from '@/hooks/notificador'
+import useNotificador from "@/hooks/notificador";
+import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from "@/store/tipo-acoes";
 
 export default defineComponent({
   name: "Formulario",
   props: {
     id: {
-      type: String
-    }
+      type: String,
+    },
   },
-  mounted () {
-    if(this.id) {
-      const projeto = this.store.state.projetos.find(proj => proj.id == this.id)
-      this.nomeDoProjeto = projeto?.nome || ''
+  mounted() {
+    if (this.id) {
+      const projeto = this.store.state.projetos.find(
+        (proj) => proj.id == this.id
+      );
+      this.nomeDoProjeto = projeto?.nome || "";
     }
   },
   data() {
     return {
-      nomeDoProjeto: ""
+      nomeDoProjeto: "",
     };
   },
   methods: {
     salvar() {
       if (this.id) {
-        this.store.commit(ALTERA_PROJETO, {
-          id: this.id,
-          nome: this.nomeDoProjeto
-        })
+        this.store
+          .dispatch(ALTERAR_PROJETOS, {
+            id: this.id,
+            nome: this.nomeDoProjeto,
+          })
+          .then(() => {
+            this.requisicaoComSucesso();
+          })
+          .catch(() => {
+            this.requisicaoComFalha();
+          });
       } else {
-        this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
+        this.store
+          .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
+          .then(() => {
+            this.requisicaoComSucesso();
+          })
+          .catch(() => {
+            this.requisicaoComFalha();
+          });
       }
-
+    },
+    requisicaoComSucesso() {
       this.nomeDoProjeto = "";
-      this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi cadastrado com sucesso!')
-      this.$router.push('/projetos')
-    }
+      this.notificar(
+        TipoNotificacao.SUCESSO,
+        "Excelente!",
+        "O projeto foi cadastrado com sucesso!"
+      );
+      this.$router.push("/projetos");
+    },
+    requisicaoComFalha() {
+      this.notificar(
+        TipoNotificacao.FALHA,
+        "ERRO!",
+        "O projeto não foi cadastrado !"
+      );
+      this.$router.push("/projetos");
+    },
   },
-  setup () {
-    const store = useStore()
-    const { notificar } = useNotificador()
+  setup() {
+    const store = useStore();
+    const { notificar } = useNotificador();
     return {
       store,
-      notificar
-    }
-  }
+      notificar,
+    };
+  },
 });
 </script>
