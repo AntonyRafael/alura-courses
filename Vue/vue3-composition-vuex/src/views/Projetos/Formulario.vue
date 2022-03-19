@@ -19,12 +19,13 @@
 
 <script lang="ts">
 import { useStore } from "@/store";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 import { TipoNotificacao } from "@/interfaces/INotificacao";
 
 import useNotificador from "@/hooks/notificador";
 import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from "@/store/tipo-acoes";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Formulario",
@@ -33,68 +34,68 @@ export default defineComponent({
       type: String,
     },
   },
-  mounted() {
-    if (this.id) {
-      const projeto = this.store.state.projeto.projetos.find(
-        (proj) => proj.id == this.id
+  methods: {},
+  setup(props) {
+    const store = useStore();
+    const { notificar } = useNotificador();
+
+    const router = useRouter();
+
+    const nomeDoProjeto = ref("");
+
+    if (props.id) {
+      const projeto = store.state.projeto.projetos.find(
+        (proj) => proj.id == props.id
       );
-      this.nomeDoProjeto = projeto?.nome || "";
+      nomeDoProjeto.value = projeto?.nome || "";
     }
-  },
-  data() {
-    return {
-      nomeDoProjeto: "",
-    };
-  },
-  methods: {
-    salvar() {
-      if (this.id) {
-        this.store
-          .dispatch(ALTERAR_PROJETOS, {
-            id: this.id,
-            nome: this.nomeDoProjeto,
-          })
-          .then(() => {
-            this.requisicaoComSucesso();
-          })
-          .catch(() => {
-            this.requisicaoComFalha();
-          });
-      } else {
-        this.store
-          .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
-          .then(() => {
-            this.requisicaoComSucesso();
-          })
-          .catch(() => {
-            this.requisicaoComFalha();
-          });
-      }
-    },
-    requisicaoComSucesso() {
-      this.nomeDoProjeto = "";
-      this.notificar(
+
+    const requisicaoComSucesso = () => {
+      nomeDoProjeto.value = "";
+      notificar(
         TipoNotificacao.SUCESSO,
         "Excelente!",
         "O projeto foi cadastrado com sucesso!"
       );
-      this.$router.push("/projetos");
-    },
-    requisicaoComFalha() {
-      this.notificar(
+      router.push("/projetos");
+    };
+    const requisicaoComFalha = () => {
+      notificar(
         TipoNotificacao.FALHA,
         "ERRO!",
         "O projeto não foi cadastrado !"
       );
-      this.$router.push("/projetos");
-    },
-  },
-  setup() {
-    const store = useStore();
-    const { notificar } = useNotificador();
+      router.push("/projetos");
+    };
+
+    const salvar = () => {
+      if (props.id) {
+        store
+          .dispatch(ALTERAR_PROJETOS, {
+            id: props.id,
+            nome: nomeDoProjeto.value,
+          })
+          .then(() => {
+            requisicaoComSucesso();
+          })
+          .catch(() => {
+            requisicaoComFalha();
+          });
+      } else {
+        store
+          .dispatch(CADASTRAR_PROJETOS, nomeDoProjeto.value)
+          .then(() => {
+            requisicaoComSucesso();
+          })
+          .catch(() => {
+            requisicaoComFalha();
+          });
+      }
+    };
+
     return {
-      store,
-      notificar,
+      nomeDoProjeto,
+      salvar,
     };
   },
 });

@@ -7,6 +7,10 @@
     {
       "nome": "Aprendendo Actions",
       "id": 2
+    },
+    {
+      "id": 3,
+      "nome": "Testando Composition API 2"
     }
   ],
   "tarefas": [
