@@ -27,6 +27,15 @@
         "nome": "Alura Tracker 3.0"
       },
       "id": 2
+    },
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "Testando module Vuex ",
+      "projeto": {
+        "nome": "Aprendendo Actions",
+        "id": 2
+      },
+      "id": 3
     }
   ]
 }
