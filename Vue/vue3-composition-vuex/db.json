@@ -1,0 +1,46 @@
+{
+  "projetos": [
+    {
+      "id": 1,
+      "nome": "Alura Tracker 3.0"
+    },
+    {
+      "nome": "Aprendendo Actions",
+      "id": 2
+    },
+    {
+      "id": 3,
+      "nome": "Testando Composition API 2"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 180,
+      "descricao": "Configuração do ambiente ",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 3.0"
+      }
+    },
+    {
+      "duracaoEmSegundos": 5,
+      "descricao": "Refatorando Vuex",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker 3.0"
+      },
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "Testando module Vuex ",
+      "projeto": {
+        "nome": "Aprendendo Actions",
+        "id": 2
+      },
+      "id": 3
+    }
+    
+  ]
+}
